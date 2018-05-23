@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5dbb8022-3c56-40a5-9659-4ac230c7fe9a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>DominoProphet.py</StartupFile>
+    <StartupFile>generator.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DominoProphet.py" />
     <Compile Include="generator-square.py" />
     <Compile Include="generator.py" />
   </ItemGroup>

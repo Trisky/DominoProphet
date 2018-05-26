@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5dbb8022-3c56-40a5-9659-4ac230c7fe9a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>generator.py</StartupFile>
+    <StartupFile>Tensorflow.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,7 @@
   <ItemGroup>
     <Compile Include="generator-square.py" />
     <Compile Include="generator.py" />
-    <Compile Include="presentacion-1C2018.py" />
+    <Compile Include="Tensorflow.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -6,12 +6,15 @@ import tensorflow as tf
 import sys
 import pandas as pd
 
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 #CANTIDAD DE PIEZAS (CATEGORIAS) DEL DATASET
 PIECES = 28
 
 #TAMANO DE LAS IMAGENES EN PX
-IMAGE_HEIGHT = 45
-IMAGE_WIDTH = 45
+IMAGE_HEIGHT = 150
+IMAGE_WIDTH = 150
 
 TOTAL_PIXELS = IMAGE_WIDTH*IMAGE_HEIGHT
 
@@ -22,7 +25,7 @@ model_name = "model_0.656746"
 USING_LOADED_MODEL = False
 
 # True para usar el json que represenra las imagenes ya cread, False para volver a generar el json de train y test.
-USING_EXISTING_DATASET_JSONS = False
+USING_EXISTING_DATASET_JSONS = True
 
 # True para invertir los colores, lo blanco a negro, lo negro a blanco
 INVERT_COLORS = False
@@ -42,7 +45,7 @@ def load_image(addr):
     return img
 
 def load_label(addr):
-    label = np.array(int(addr.split("-")[0].split("/")[2].split("_")[0]))
+    label = np.array(int(addr.split("-")[0].split('\\')[2].split("_")[0]))
     ha_label = np.zeros((label.size, PIECES))
     ha_label[np.arange(label.size), label] = 1
     ha_label = ha_label[0].astype(np.int).tolist()
@@ -89,7 +92,7 @@ def batch_data(source, target, batch_size):
         yield np.array(source_batch), np.array(target_batch)
 
 # Cargamos el training set
-dominos_train_path = 'images/trainingImages/*.jpg'
+dominos_train_path = 'images\\trainingImages\\*.jpg'
 json_file = 'trainDataSet.json'
 if not USING_EXISTING_DATASET_JSONS:
     # Levantamos las imagenes y generamos un json con su representacion
@@ -102,7 +105,7 @@ print("Cargando json con train data...")
 dict_dataset_train = read_images_dataset(json_file)
 
 # Cargamos el validation set
-dominos_test_path = 'images/testImages/*.jpg'
+dominos_test_path = 'images\\testImages\\*.jpg'
 json_file = 'testDataSet.json'
 if not USING_EXISTING_DATASET_JSONS:
     # Levantamos las imagenes y generamos un json con su representacion
@@ -142,21 +145,23 @@ if (USING_LOADED_MODEL == False):
 if (USING_LOADED_MODEL == False):
     z = tf.matmul(x, W) + b
     size = len(dict_dataset_train['images'])
+    print("Generando modelo con diccionario de tamanio: ",size," y batchSize: ",BATCH_SIZE);
     for i in range((size//BATCH_SIZE)):
         batch = next(batch_train)
         batch_xs = batch[0]
         batch_ys = batch[1]
         _, loss_val, W_val, b_val, z_val = sess.run([train_step, cross_entropy, W, b, z],
-                                      feed_dict={x: batch_xs, y_: batch_ys})
-# Valores durante el entrenamiento:
-#         print(z_val)
-#         print('loss =', loss_val)
-#         print('W =', W_val)
-#         print('b =', b_val)
+                                                   feed_dict={x: batch_xs, y_: batch_ys})
+
+## Valores durante el entrenamiento:
+#print(z_val)
+#print('loss =', loss_val)
+#print('W =', W_val)
+#print('b =', b_val)
 
 
 if USING_LOADED_MODEL:
-    saver.restore(sess, model_name+".ckpt")
+    saver.restore(sess,dir_path+'/'+ model_name+".ckpt")
     print("Cargado modelo pre entrenado.")
 
 correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
@@ -178,6 +183,6 @@ pd.DataFrame(pairs).T.to_csv('test-prediction.csv', sep='\t', encoding='utf-8')
 
 
 if (USING_LOADED_MODEL == False):
-    save_path = saver.save(sess, "model_"+str(model_accuracy)+".ckpt")
+    save_path = saver.save(sess,dir_path+'/'+ "model_"+str(model_accuracy)+".ckpt")
     print("Modelo guardado: %s" % save_path)
 

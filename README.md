@@ -1,7 +1,7 @@
 # DominoProphet
 Trabajo práctico de Inteligencia artificial - UTN FRBA  -5to año
 
-# Running requeriments:
+# Running requirements:
 python, tensorflow-cpu package
 
 # Running instructions:

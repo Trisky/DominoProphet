@@ -13,8 +13,8 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 PIECES = 28
 
 #TAMANO DE LAS IMAGENES EN PX
-IMAGE_HEIGHT = 150
-IMAGE_WIDTH = 150
+IMAGE_HEIGHT = 45
+IMAGE_WIDTH = 45
 
 TOTAL_PIXELS = IMAGE_WIDTH*IMAGE_HEIGHT
 
@@ -25,7 +25,7 @@ model_name = "model_0.656746"
 USING_LOADED_MODEL = False
 
 # True para usar el json que represenra las imagenes ya cread, False para volver a generar el json de train y test.
-USING_EXISTING_DATASET_JSONS = True
+USING_EXISTING_DATASET_JSONS = False
 
 # True para invertir los colores, lo blanco a negro, lo negro a blanco
 INVERT_COLORS = False

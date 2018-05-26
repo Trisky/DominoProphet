@@ -1,12 +1,14 @@
 import numpy as np
 from os import makedirs, path
 from PIL import Image, ImageDraw
+
 image_height = 150
 image_width = 150
-
+image_size_ratio = 0.3
+output_size = (int(round(image_width*image_size_ratio)),int(round(image_height*image_size_ratio)))
 height = 148
 width = 75
-line_thickness = 2
+line_thickness = 4
 margin = 5
 spacing = 3
 circle_radius = 9
@@ -38,7 +40,7 @@ def init_image(name):
     return im
 
 def draw_base(drawer):
-    drawer.line(((left_start, down_start_offset), (width-left_start-1, down_start_offset)), fill=line_color, width=line_thickness)
+    drawer.line(((0, down_start_offset), (width, down_start_offset)), fill=line_color, width=line_thickness)
 
 def draw_number(drawer, number, up):
     for (columna,fila), value in np.ndenumerate(number): 
@@ -60,7 +62,10 @@ def draw_piece(piece, degrees, name):
     img_w, img_h = img.size
     offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
     background.paste(img, offset)
-    background.save(name, "JPEG")
+    if (image_size_ratio<1.0):
+        background.resize(output_size).save(name, "JPEG")
+    else:
+        background.save(name, "JPEG")
 
 def draw_pieces(pieces, prefix, degrees):
     i=0
@@ -86,7 +91,7 @@ pieces = []
 i=0
 for index, value in np.ndenumerate(set_index):
     if value>0:
-        name =  ""+str(i)+"_"+str(index[0])+""+str(index[1])
+        name =  ""+str(i).zfill(2)+"_"+str(index[0])+""+str(index[1])
     else:
         continue
     piece = np.array([numbers[index[0]],numbers[index[1]], name])

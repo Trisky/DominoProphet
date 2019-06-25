@@ -1,5 +1,6 @@
 # DominoProphet
-Trabajo práctico de Inteligencia artificial - UTN FRBA  -5to año
+Image recognition neural network training and usage using tensorflow
+University assignment: Artificial intelligence - 5th year -  UTN FRBA - 
 
 # Running requirements:
 python, tensorflow-cpu package
